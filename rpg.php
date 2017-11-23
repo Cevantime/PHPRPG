@@ -19,8 +19,10 @@ function choixDesClasses() {
 }
 
 function creationDesPersonnages($classeJoueur1, $classeJoueur2) {
-    $personnageJoueur1 = new $classeJoueur1();
-    $personnageJoueur2 = new $classeJoueur2();
+    $nom1 = input("Quel est le nom du joueur 1 ? ");
+    $personnageJoueur1 = new $classeJoueur1($nom1, 0);
+    $nom2 = input("Quel est le nom du joueur 2 ? ");
+    $personnageJoueur2 = new $classeJoueur2($nom2, 6);
     
     return array($personnageJoueur1, $personnageJoueur2);
 }
@@ -38,6 +40,24 @@ function annulationDesDeplacements($personnageRapide, $personnageLent) {
             $personnageLent->annulerBouger();
         }
     }
+}
+
+function afficherPlateau($personnage1, $personnage2) {
+    for($i = 0; $i <= 6; $i++) {
+        if($i === $personnage2->getPosition()){
+            echo 'P';
+        } else if($i === $personnage1->getPosition()) {
+            echo 'P';
+        } else {
+            echo '.';
+        }
+    }
+    echo "\n";
+}
+
+function afficherPV($personnage1, $personnage2) {
+    echo "{$personnage1->getNom()} : {$personnage1->getPv()} PVs\n";
+    echo "{$personnage2->getNom()} : {$personnage2->getPv()} PVs\n";
 }
 
 echo "Bienvenue sur notre mini-RPG !\n\n";
@@ -59,8 +79,18 @@ if($personnages[0]->getVitesseDeplacement() >= $personnages[1]->getVitesseDeplac
     $personnageRapide = $personnages[1];
 }
 
+if($personnages[0]->getVitesseAttaque() >= $personnages[1]->getVitesseAttaque()) {
+    $personnageAttaqueRapide = $personnages[0];
+    $personnageAttaqueLent = $personnages[1];
+} else {
+    $personnageAttaqueRapide = $personnages[1];
+    $personnageAttaqueLent = $personnages[0];
+}
+
 $personnageLent instanceof Personnage;
 $personnageRapide instanceof Personnage;
+
+echo "La partie commence ! \n";
 
 // TANT QUE LES DEUX JOUEURS SONT VIVANTS LE JEU CONTINUE
 
@@ -74,14 +104,18 @@ while($personnageRapide->getPv() > 0 && $personnageLent->getPv() > 0){
     // ANNULATION DE DEPLACEMENT LE CAS ECHEANT
     annulationDesDeplacements($personnageRapide, $personnageLent);
     
+    afficherPlateau($personnageRapide, $personnageLent);
+    
     // ATTAQUE JOUEUR LE + RAPIDE
-    $personnageRapide->attaquer();
+    $personnageAttaqueRapide->attaquer($personnageAttaqueLent);
 
     // VERIFICATION DE LA SANTE DES JOUEURS
-    if($personnageLent->getPv() > 0) {
+    if($personnageAttaqueLent->getPv() > 0) {
         // ATTAQUE DU JOUEUR LE - RAPIDE SI IL Y A LIEU
-        $personnageLent->attaquer();
+        $personnageAttaqueLent->attaquer($personnageAttaqueRapide);
     }
+    
+    afficherPV($personnageRapide, $personnageLent);
 
     // fin de la boucle de jeu
     
@@ -89,7 +123,7 @@ while($personnageRapide->getPv() > 0 && $personnageLent->getPv() > 0){
 
 // ANNONCE DU VAINQUEUR
 if($personnages[0]->getPv() > 0){
-    echo 'Le joueur 1 a gagné !!';
+    echo 'Le joueur 1 a gagne !!';
 } else {
-    echo 'Le joueur 2 a gagné !!';
+    echo 'Le joueur 2 a gagne !!';
 }
