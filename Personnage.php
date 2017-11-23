@@ -11,6 +11,7 @@ class Personnage {
     private $vitesseAttaque;
     private $vitesseDeplacement;
     private $position;
+    private $dernierePosition;
     
     public function __construct($positionInitiale) {
         $this->position = $positionInitiale;
@@ -42,6 +43,10 @@ class Personnage {
 
     public function getPosition() {
         return $this->position;
+    }
+    
+    public function getDernierePosition() {
+        return $this->dernierePosition;
     }
 
     public function setPv($pv) {
