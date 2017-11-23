@@ -17,16 +17,34 @@ class Personnage {
         $this->position = $positionInitiale;
     }
 
-    public function bouger($nbCase) {
-        // TODO
+    public function bouger() {
+        $this->dernierePosition = $this->getPosition();
+        $nbCase = input('De combien de cases doit bouger Personnage ?');
+        if(is_numeric($nbCase)){
+            $nbMax = 2;
+            $nbMin = -2;
+            if($nbCase >= $nbMin && $nbCase <= $nbMax){
+                $this->setPosition($this->getPosition() + $nbCase);
+            } else {
+                $nbCase = 0;
+            }
+        } else {
+            $nbCase = 0;
+        }
+        
+        if($this->getPosition() < 0){
+            $this->setPosition(0);
+        } else if($this->getPosition() > 6){
+            $this->setPosition(6);
+        }
     }
     
-    public function attaquer($puissance) {
-        // TODO
+    public function attaquer($adversaire) {
+        $adversaire->setPv($adversaire->getPv() - 3);
     }
     
-    public function annulerBouger($nbCase) {
-        // TODO
+    public function annulerBouger() {
+        $this->setPosition($this->getDernierePosition());
     }
     
     public function getPv() {

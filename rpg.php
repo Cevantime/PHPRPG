@@ -12,6 +12,8 @@ if( ! function_exists('readline')){
     }
 }
 
+require_once 'Personnage.php';
+
 function choixDesClasses() {
     return array ('Personnage', 'Personnage' );
 }
