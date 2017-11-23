@@ -29,7 +29,13 @@ function deplacementDesPersonnages($personnageRapide, $personnageLent) {
 }
 
 function annulationDesDeplacements($personnageRapide, $personnageLent) {
-    
+    if($personnageLent->getPosition() === $personnageRapide->getPosition()){
+        if($personnageLent->getPosition() === $personnageLent->getDernierePosition()){
+            $personnageRapide->annulerBouger();
+        } else {
+            $personnageLent->annulerBouger();
+        }
+    }
 }
 
 echo "Bienvenue sur notre mini-RPG !\n\n";
@@ -51,6 +57,9 @@ if($personnages[0]->getVitesseDeplacement() >= $personnages[1]->getVitesseDeplac
     $personnageRapide = $personnages[1];
 }
 
+$personnageLent instanceof Personnage;
+$personnageRapide instanceof Personnage;
+
 // TANT QUE LES DEUX JOUEURS SONT VIVANTS LE JEU CONTINUE
 
 while($personnageRapide->getPv() > 0 && $personnageLent->getPv() > 0){
@@ -61,18 +70,24 @@ while($personnageRapide->getPv() > 0 && $personnageLent->getPv() > 0){
     deplacementDesPersonnages($personnageRapide, $personnageLent);
     
     // ANNULATION DE DEPLACEMENT LE CAS ECHEANT
-
+    annulationDesDeplacements($personnageRapide, $personnageLent);
+    
     // ATTAQUE JOUEUR LE + RAPIDE
+    $personnageRapide->attaquer();
 
     // VERIFICATION DE LA SANTE DES JOUEURS
-
-    // ATTAQUE DU JOUEUR LE - RAPIDE SI IL Y A LIEU
-
-    // VERIFICATION DE LA SANTE DES JOUEURS
+    if($personnageLent->getPv() > 0) {
+        // ATTAQUE DU JOUEUR LE - RAPIDE SI IL Y A LIEU
+        $personnageLent->attaquer();
+    }
 
     // fin de la boucle de jeu
     
 }
 
-
 // ANNONCE DU VAINQUEUR
+if($personnages[0]->getPv() > 0){
+    echo 'Le joueur 1 a gagné !!';
+} else {
+    echo 'Le joueur 2 a gagné !!';
+}
