@@ -45,9 +45,9 @@ function annulationDesDeplacements($personnageRapide, $personnageLent) {
 function afficherPlateau($personnage1, $personnage2) {
     for($i = 0; $i <= 6; $i++) {
         if($i === $personnage2->getPosition()){
-            echo 'P';
+            echo '2';
         } else if($i === $personnage1->getPosition()) {
-            echo 'P';
+            echo '1';
         } else {
             echo '.';
         }
@@ -104,7 +104,7 @@ while($personnageRapide->getPv() > 0 && $personnageLent->getPv() > 0){
     // ANNULATION DE DEPLACEMENT LE CAS ECHEANT
     annulationDesDeplacements($personnageRapide, $personnageLent);
     
-    afficherPlateau($personnageRapide, $personnageLent);
+    afficherPlateau($personnages[0], $personnages[1]);
     
     // ATTAQUE JOUEUR LE + RAPIDE
     $personnageAttaqueRapide->attaquer($personnageAttaqueLent);
