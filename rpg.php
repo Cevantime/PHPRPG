@@ -94,9 +94,11 @@ echo "La partie commence ! \n";
 
 // TANT QUE LES DEUX JOUEURS SONT VIVANTS LE JEU CONTINUE
 
+
 while($personnageRapide->getPv() > 0 && $personnageLent->getPv() > 0){
     
     // while ...
+    afficherPlateau($personnages[0], $personnages[1]);
     
     // CHOIX DES DEPLACEMENTS DES DEUX JOUEURS
     deplacementDesPersonnages($personnageRapide, $personnageLent);
@@ -116,7 +118,7 @@ while($personnageRapide->getPv() > 0 && $personnageLent->getPv() > 0){
     }
     
     afficherPV($personnageRapide, $personnageLent);
-
+    
     // fin de la boucle de jeu
     
 }
