@@ -7,13 +7,14 @@
  */
 class Personnage {
 
-    private $pv = 20;
-    private $vitesseAttaque = 2;
-    private $vitesseDeplacement = 2;
-    private $position;
-    private $dernierePosition;
-    private $nom;
-    private $deplacementMax = 2;
+    protected $pv = 20;
+    protected $vitesseAttaque = 2;
+    protected $vitesseDeplacement = 2;
+    protected $position;
+    protected $dernierePosition;
+    protected $nom;
+    protected $deplacementMax = 2;
+    protected $forceAttaque = 3;
 
     public function __construct($nom, $positionInitiale) {
         $this->nom = $nom;
@@ -44,9 +45,9 @@ class Personnage {
 
     public function attaquer($adversaire) {
         if (abs($this->getPosition() - $adversaire->getPosition()) === 1) {
-            $adversaire->setPv($adversaire->getPv() - 3);
+            $adversaire->setPv($adversaire->getPv() - $this->getForceAttaque());
             echo "{$this->getNom()} attaque {$adversaire->getNom()}\n";
-            echo "{$adversaire->getNom()} perd 3 PVs !!\n";
+            echo "{$adversaire->getNom()} perd {$this->getForceAttaque()} PVs !!\n";
         } else {
             echo "{$this->getNom()} n'a pas touche {$adversaire->getNom()} !\n";
         }
@@ -79,6 +80,10 @@ class Personnage {
 
     public function getNom() {
         return $this->nom;
+    }
+    
+    public function getForceAttaque() {
+        return $this->forceAttaque;
     }
 
     public function setPv($pv) {

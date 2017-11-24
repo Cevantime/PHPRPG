@@ -13,9 +13,12 @@ if( ! function_exists('readline')){
 }
 
 require_once 'Personnage.php';
+require_once 'Guerrier.php';
+require_once 'Archer.php';
+require_once 'Mage.php';
 
 function choixDesClasses() {
-    return array ('Personnage', 'Personnage' );
+    return array ('Guerrier', 'Mage' );
 }
 
 function creationDesPersonnages($classeJoueur1, $classeJoueur2) {
